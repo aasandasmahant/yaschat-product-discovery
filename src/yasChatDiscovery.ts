@@ -78,17 +78,18 @@ export function assessEvidence(product: DiscoveryProduct): {
   const validRatings = sources.filter(
     (source) => Number.isFinite(source.rating) && (source.rating as number) >= 0 && (source.rating as number) <= 5,
   );
-  const totalReviews = sources.reduce(
+  const sourceReviewCount = sources.reduce(
     (sum, source) => sum + (Number.isFinite(source.reviewCount) && (source.reviewCount as number) > 0 ? source.reviewCount as number : 0),
     0,
   );
+  const totalReviews = Math.max(sourceReviewCount, product.reviewCount ?? 0);
   const averageRating = validRatings.length
     ? validRatings.reduce((sum, source) => sum + (source.rating as number), 0) / validRatings.length
     : Number.isFinite(product.rating) ? product.rating as number : null;
   const verifiedSources = sources.filter((source) => source.verified && source.url).length;
   const status: EvidenceStatus =
-    verifiedSources >= 2 && totalReviews >= 20 ? "verified" :
-    validRatings.length > 0 || totalReviews > 0 ? "partial" : "insufficient";
+    verifiedSources >= 2 && sourceReviewCount >= 20 ? "verified" :
+    averageRating !== null || totalReviews > 0 ? "partial" : "insufficient";
   return {
     status,
     averageRating,
