@@ -128,8 +128,9 @@ export function filterAndSortProducts(
       .filter(Boolean).join(" ").toLocaleLowerCase();
     const matchesQuery = !query || searchable.includes(query);
     const matchesCategory = !params.category || params.category === "All" || product.category === params.category;
-    const matchesTier = !params.tier || params.tier === "All" ||
-      classifyPriceTier(product.price, params.budget ?? 0) === params.tier;
+    const hasBudget = Number.isFinite(params.budget) && (params.budget ?? 0) > 0;
+    const matchesTier = !params.tier || params.tier === "All" || !hasBudget ||
+      classifyPriceTier(product.price, params.budget as number) === params.tier;
     return matchesQuery && matchesCategory && matchesTier;
   });
   switch (params.sort ?? "relevance") {
