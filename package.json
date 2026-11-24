@@ -1,0 +1,18 @@
+{
+  "name": "@yaschat/product-discovery",
+  "version": "2.0.0",
+  "private": true,
+  "description": "YAS Chat product discovery UI, transparent evidence scoring and API adapter",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.6.0"
+  }
+}
