@@ -105,7 +105,6 @@ function ProductCard({
           style={{ ...button, background: "#2563eb", textDecoration: "none", display: "inline-block" }}>
           View merchant offer
         </a> : <span style={{ fontSize: 12, color: "#fbbf24" }}>Verified merchant link not supplied</span>}
-        <button type="button" style={button} onClick={() => onOpen?.(product)}>Product details</button>
       </div>
     </article>
   );
