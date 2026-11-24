@@ -67,7 +67,8 @@ export interface CommunityDiscoveryCard {
 }
 
 export async function fetchCommunityDiscoveryCards(baseUrl = ""): Promise<CommunityDiscoveryCard[]> {
-  const response = await fetch(new URL("/api/discover", baseUrl || window.location.origin), {
+  const origin = baseUrl || (typeof window !== "undefined" ? window.location.origin : "http://localhost");
+  const response = await fetch(new URL("/api/discover", origin), {
     headers: { Accept: "application/json" },
     credentials: "same-origin",
   });
