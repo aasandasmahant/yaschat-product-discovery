@@ -23,6 +23,7 @@ function boundedText(value, max, fallback = "") {
 
 function normalizeProduct(input) {
   if (!input || typeof input !== "object") return null;
+  if (input.price === null || input.price === undefined || input.price === "") return null;
   const price = Number(input.price);
   if (!Number.isFinite(price) || price < 0) return null;
   const id = boundedText(input.id, 160);
@@ -53,7 +54,8 @@ function normalizeProduct(input) {
     affiliateNetwork: boundedText(input.affiliateNetwork, 40) || undefined,
     originalPrice: Number.isFinite(Number(input.originalPrice)) && Number(input.originalPrice) > price
       ? Number(input.originalPrice) : undefined,
-    rating: Number.isFinite(Number(input.rating)) && Number(input.rating) >= 0 && Number(input.rating) <= 5
+    rating: input.rating !== null && input.rating !== undefined && input.rating !== "" &&
+      Number.isFinite(Number(input.rating)) && Number(input.rating) >= 0 && Number(input.rating) <= 5
       ? Number(input.rating) : undefined,
     reviewCount: Number.isFinite(Number(input.reviewCount)) && Number(input.reviewCount) >= 0
       ? Math.floor(Number(input.reviewCount)) : undefined,
